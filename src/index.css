@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  font-family: 'CodaCaption',monospace;
+}
+
+@font-face{
+  font-family: 'CodaCaption';
+  src: url('./assets/fonts/CodaCaption-ExtraBold.ttf');
+}
