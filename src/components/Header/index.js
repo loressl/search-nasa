@@ -29,7 +29,7 @@ Header.Content = styled.div`
     width:60%;
     margin:2rem;
     @media screen and (max-width: 500px){
-        width:60%;
+        width:70%;
     }
 `
 

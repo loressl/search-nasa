@@ -1,4 +1,4 @@
-export default{
+const stylesDefault={
     colors:{
         primary:'#3378af',
         textButton:'#FFF',
@@ -7,7 +7,6 @@ export default{
     button:{
         width:'6rem',
     },
-    title:{
-        color:'#FFF'
-    }
 }
+
+export default stylesDefault
