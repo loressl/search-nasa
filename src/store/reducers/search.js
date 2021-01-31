@@ -1,6 +1,6 @@
 import { SEARCH } from '../actions/actionTypes'
 
-const initialState = { list: [] }
+var initialState = { list: [] }
 
 export default function searchReducer(state = initialState, action){
     switch(action.type){

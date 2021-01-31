@@ -14,15 +14,16 @@ import Card from '../../components/Card'
 
 import { connect } from 'react-redux'
 
-import { search } from '../../store/actions/search'
+import { searchAction } from '../../store/actions/search'
 
 function Search(props) {
     const [fieldSearch, setFieldSearch] = useState('')
+    const list = props.list || []
 
-    const onSubmit =()=>{
-        props.onSearch(fieldSearch)
+    const onSubmit = async()=>{
+        await props.onSearch(fieldSearch)
     }
-
+    
     return (
         <>
             <Header backgroundImage={backHeader}>
@@ -45,20 +46,32 @@ function Search(props) {
                 </Header.Content>
             </Header>
             <Container>
-                <Card
-                    title="title"
-                    copyright="copyright"
-                    image={backHeader}
-                />
+                {list.map((item, index)=>{
+                    return <Card
+                        key={index}
+                        title={item.title}
+                        copyright={item.copyright}
+                        mediaType={item.media_type}
+                        url={item.url}
+                        date={item.date}
+                        thumbnail_url={item.thumbnail_url}
+                    />
+                })}
             </Container>
         </>
     )
 }
 
-const mapDispatchToProps = dispatch =>{
+const mapStateToProps = state =>{
     return {
-        onSearch: fieldSearch => dispatch(search(fieldSearch))
+        list : state.search.list
     }
 }
 
-export default connect(null, mapDispatchToProps)(Search)
+const mapDispatchToProps = dispatch =>{
+    return {
+        onSearch: fieldSearch => dispatch(searchAction(fieldSearch))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search)

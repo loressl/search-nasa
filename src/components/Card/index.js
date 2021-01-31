@@ -5,29 +5,48 @@ import {
     CardBody,
     CardTitle,
     CardText,
+    CardFooter,
     Button
 } from 'reactstrap'
+import VideoCard from '../VideoCard'
+import noImage from '../../assets/img/no-image-icon-0.jpg'
 
 const DivCard = styled.div`
-    width:25rem;
+    width:30rem;
     margin:0.5rem;
 `
 
 export default function CardComponent(props) {
+    var url = props.url !== undefined ? props.url : noImage
+
     return (
         <DivCard>
-            <Card>
-                <img top width="100%" src={props.image} alt={props.title} />
+            <Card style={{ height: '30rem' }}>
+                {(props.mediaType === 'image' || props.mediaType === 'other') &&
+                    <img
+                        top
+                        width="100%"
+                        height="45%"
+                        src={url}
+                        alt={props.title}
+                    />}
+                {props.mediaType === 'video' &&
+                    <VideoCard
+                        videoURL={url}
+                    />
+                }
                 <CardBody>
                     <CardTitle tag="h5">{props.title}</CardTitle>
                     <CardText>{props.copyright}</CardText>
                     <CardText>
                         <small>
-                            data
+                            {props.date}
                         </small>
                     </CardText>
-                    <Button color="info">View More</Button>
                 </CardBody>
+                <CardFooter>
+                    <Button color="info">View More</Button>
+                </CardFooter>
             </Card>
         </DivCard>
     )
