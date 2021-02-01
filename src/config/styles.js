@@ -1,6 +1,6 @@
 const stylesDefault={
     colors:{
-        primary:'#3378af',
+        primary:'#0a1823',
         textButton:'#FFF',
         textInfo:'#000',
     },

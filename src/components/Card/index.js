@@ -16,12 +16,20 @@ const DivCard = styled.div`
     margin:0.5rem;
 `
 
+const StyledCard = styled(Card)`
+    height: 35rem;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    @media screen and (max-width: 500px){
+        height:40rem
+    }
+`
+
 export default function CardComponent(props) {
     var url = props.url !== undefined ? props.url : noImage
 
     return (
         <DivCard>
-            <Card style={{ height: '30rem' }}>
+            <StyledCard> 
                 {(props.mediaType === 'image' || props.mediaType === 'other') &&
                     <img
                         top
@@ -47,7 +55,7 @@ export default function CardComponent(props) {
                 <CardFooter>
                     <Button color="info">View More</Button>
                 </CardFooter>
-            </Card>
+            </StyledCard>
         </DivCard>
     )
 }
