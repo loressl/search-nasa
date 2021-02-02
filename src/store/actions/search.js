@@ -1,4 +1,4 @@
-import { SEARCH, CLEAR_LIST } from './actionTypes'
+import { SEARCH, CLEAR_LIST, CHOOSE_ITEM } from './actionTypes'
 import { search } from '../../service'
 
 export const searchAction = fieldSearch => {
@@ -13,4 +13,13 @@ export const searchAction = fieldSearch => {
 
 export const clearList = () => {
     return { type: CLEAR_LIST }
+}
+
+export const chooseItem = index =>{
+    return dispatch => {
+        dispatch({
+            type: CHOOSE_ITEM,
+            payload: index
+        })
+    }
 }

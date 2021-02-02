@@ -1,6 +1,6 @@
-import { SEARCH, CLEAR_LIST } from '../actions/actionTypes'
+import { SEARCH, CLEAR_LIST, CHOOSE_ITEM } from '../actions/actionTypes'
 
-var initialState = { list: [] }
+var initialState = { list: [], item:{} }
 
 export default function searchReducer(state = initialState, action) {
     switch (action.type) {
@@ -8,6 +8,8 @@ export default function searchReducer(state = initialState, action) {
             return { ...state, list: action.payload }
         case CLEAR_LIST:
             return { ...state, list: [] }
+        case CHOOSE_ITEM:
+            return {...state, item: state.list[action.payload]}
         default:
             return state
     }

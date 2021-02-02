@@ -8,12 +8,13 @@ import {
     Button,
     Tooltip
 } from 'reactstrap'
-import style from '../../config/styles';
+import style from '../../config/styles'
 import backHeader from '../../assets/img/header2.jpg'
 import Container from '../../components/Container'
 import Card from '../../components/Card'
 import Alert from '../../components/Alert'
 import Footer from '../../components/Footer'
+import Modal from '../../components/Modal'
 
 import { connect } from 'react-redux'
 
@@ -25,6 +26,8 @@ function Search(props) {
     const [onSubmitFlag, setOnSubmit] = useState(false)
     const [tooltipOpen, setTooltipOpen] = useState(false)
     const [heightFooter, setHeightFooter] = useState(0)
+    const [heightHeader, setHeightHeader] = useState(0)
+    const [modal, setModal] = useState(false)
 
     var list = props.list || []
 
@@ -33,6 +36,7 @@ function Search(props) {
             setOnSubmit(false)
         }
         setHeightFooter(document.getElementById('footer').clientHeight)
+        setHeightHeader(document.getElementById('header').clientHeight)
     }, [list.length])
 
     const onSubmit = async () => {
@@ -42,6 +46,10 @@ function Search(props) {
     }
 
     const toggle = () => setTooltipOpen(!tooltipOpen);
+
+    const toggleModal = () =>{
+        setModal(!modal)
+    }
 
     return (
         <>
@@ -59,17 +67,17 @@ function Search(props) {
                                 onChange={event => setFieldSearch(event.target.value)}
                             />
                             <Tooltip
-                                placement="top-end"
+                                placement="top-start"
                                 isOpen={tooltipOpen}
                                 target="fieldSearch"
                                 toggle={toggle}
                             >
                                 For a better experience, type in English only
-                        </Tooltip>
+                            </Tooltip>
                             <InputGroupAddon addonType="append">
                                 <Button onClick={onSubmit} style={style.button} color="info">
                                     Search
-                            </Button>
+                                </Button>
                             </InputGroupAddon>
                         </InputGroup>
                     </Header.Content>
@@ -88,15 +96,22 @@ function Search(props) {
                         list.map((item, index) => {
                             return <Card
                                 key={index}
+                                index={index}
                                 title={item.title}
                                 copyright={item.copyright}
                                 mediaType={item.media_type}
                                 url={item.url}
                                 date={item.date}
                                 thumbnail_url={item.thumbnail_url}
+                                openModal={toggleModal}
                             />
                         })
                     }
+                    <Modal
+                        modal={modal}
+                        toggleModal={toggleModal}
+                        heightHeader={heightHeader}
+                    />
                 </Container>
             </div>
             <Footer

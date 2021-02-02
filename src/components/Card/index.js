@@ -11,6 +11,9 @@ import {
 import VideoCard from '../VideoCard'
 import noImage from '../../assets/img/no-image-icon-0.jpg'
 
+import { connect } from 'react-redux'
+import { chooseItem } from '../../store/actions/search'
+
 const DivCard = styled.div`
     width:30rem;
     margin:0.5rem;
@@ -24,12 +27,12 @@ const StyledCard = styled(Card)`
     }
 `
 
-export default function CardComponent(props) {
+function CardComponent({ setIndexItem, ...props }) {
     var url = props.url !== undefined ? props.url : noImage
 
     return (
         <DivCard>
-            <StyledCard> 
+            <StyledCard>
                 {(props.mediaType === 'image' || props.mediaType === 'other') &&
                     <img
                         top
@@ -41,6 +44,8 @@ export default function CardComponent(props) {
                 {props.mediaType === 'video' &&
                     <VideoCard
                         videoURL={url}
+                        width={100}
+                        height={15}
                     />
                 }
                 <CardBody>
@@ -53,9 +58,22 @@ export default function CardComponent(props) {
                     </CardText>
                 </CardBody>
                 <CardFooter>
-                    <Button color="info">View More</Button>
+                    <Button color="info" onClick={_ => {
+                        props.openModal()
+                        props.onChoose(props.index)
+                    }}>
+                        View More
+                    </Button>
                 </CardFooter>
             </StyledCard>
         </DivCard>
     )
 }
+
+const mapDispatchToProps = dispatch =>{
+    return{
+        onChoose: index => dispatch(chooseItem(index))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(CardComponent)
