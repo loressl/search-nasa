@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import Search from '../src/page/Search/index'
-import NotFound from '../src/page/NotFound'
+import Search from '../src/page/Search'
+import NotFound from '../src/page/NotFound/index'
 
 function App() {
   return (

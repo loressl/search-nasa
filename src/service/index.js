@@ -17,6 +17,7 @@ export async function search (fieldSearch) {
     }
     const response = await axiosInstance.get(`/search/?search_query=${searchQuery}`).catch(err=>{
         console.log(err)
+        return "error"
     })
     return response
 }

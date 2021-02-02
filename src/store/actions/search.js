@@ -6,7 +6,7 @@ export const searchAction = fieldSearch => {
         const response = await search(fieldSearch)
         dispatch({
             type: SEARCH,
-            payload: response.data
+            payload: response !== "error" ? response.data: response
         })
     }
 }

@@ -29,7 +29,6 @@ const StyledCard = styled(Card)`
 
 function CardComponent({ setIndexItem, ...props }) {
     var url = props.url !== undefined ? props.url : noImage
-
     return (
         <DivCard>
             <StyledCard>
@@ -59,8 +58,10 @@ function CardComponent({ setIndexItem, ...props }) {
                 </CardBody>
                 <CardFooter>
                     <Button color="info" onClick={_ => {
+                        var page = props.currentPage - 1
+                        var index = props.index
                         props.openModal()
-                        props.onChoose(props.index)
+                        props.onChoose(page * 10 + index)
                     }}>
                         View More
                     </Button>

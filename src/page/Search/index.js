@@ -15,11 +15,13 @@ import Card from '../../components/Card'
 import Alert from '../../components/Alert'
 import Footer from '../../components/Footer'
 import Modal from '../../components/Modal'
+import Pagination from '../../components/Pagination'
 
 import { connect } from 'react-redux'
 
 import { searchAction, clearList } from '../../store/actions/search'
 import { AtomSpinner } from 'react-epic-spinners'
+
 
 function Search(props) {
     const [fieldSearch, setFieldSearch] = useState('')
@@ -28,6 +30,8 @@ function Search(props) {
     const [heightFooter, setHeightFooter] = useState(0)
     const [heightHeader, setHeightHeader] = useState(0)
     const [modal, setModal] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [itensPerPage, setItensPerPage] = useState(10)
 
     var list = props.list || []
 
@@ -47,9 +51,15 @@ function Search(props) {
 
     const toggle = () => setTooltipOpen(!tooltipOpen);
 
-    const toggleModal = () =>{
+    const toggleModal = () => {
         setModal(!modal)
     }
+
+    const indexOfLastItem = currentPage * itensPerPage
+    const indexOfFirstItem = indexOfLastItem - itensPerPage
+    const currentItens = list.slice(indexOfFirstItem, indexOfLastItem)
+
+    const paginate =(pageNumber)=> setCurrentPage(pageNumber)
 
     return (
         <>
@@ -65,6 +75,11 @@ function Search(props) {
                                 placeholder="Type here..."
                                 value={fieldSearch}
                                 onChange={event => setFieldSearch(event.target.value)}
+                                onKeyPress={event => {
+                                    if (event.key === "Enter") {
+                                        onSubmit()
+                                    }
+                                }}
                             />
                             <Tooltip
                                 placement="top-start"
@@ -82,30 +97,44 @@ function Search(props) {
                         </InputGroup>
                     </Header.Content>
                 </Header>
+                    <Pagination 
+                        itensPerPage={itensPerPage} 
+                        totalItens={list.length}
+                        paginate={paginate}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                    />
                 <Container id="container">
-                    {(!onSubmitFlag && list.length === 0) &&
+                    {list === "error" ?
                         <Alert
-                            color="success"
-                            title="Welcome!!"
-                            message="Here is a small project with React + Redux that uses an API that fetches data from NASA's APOD, which is a popular service that shows the most beautiful astronomical photographs in the world."
-                            messageFooter="Do your research!!"
+                            color="info"
+                            title="Info!!"
+                            message="There is no data for this search or an error occurred during the request."
+                            messageFooter="Try again!!"
                         />
-                    }
-                    {list.length === 0 && onSubmitFlag ?
-                        <AtomSpinner style={{ marginTop: '10rem' }} size={100} color="black" /> :
-                        list.map((item, index) => {
-                            return <Card
-                                key={index}
-                                index={index}
-                                title={item.title}
-                                copyright={item.copyright}
-                                mediaType={item.media_type}
-                                url={item.url}
-                                date={item.date}
-                                thumbnail_url={item.thumbnail_url}
-                                openModal={toggleModal}
+                        : (!onSubmitFlag && list.length === 0) ?
+                            <Alert
+                                color="success"
+                                title="Welcome!!"
+                                message="Here is a small project with React + Redux that uses the API that fetches data from NASA's APOD, a popular service that shows the most beautiful astronomical photographs in the world."
+                                messageFooter="Do your research!!"
                             />
-                        })
+                            : onSubmitFlag && list.length === 0 ?
+                                <AtomSpinner style={{ marginTop: '10rem' }} size={100} color="black" />
+                                : currentItens.map((item, index) => {
+                                    return <Card
+                                        key={index}
+                                        index={index}
+                                        title={item.title}
+                                        copyright={item.copyright}
+                                        mediaType={item.media_type}
+                                        url={item.url}
+                                        date={item.date}
+                                        thumbnail_url={item.thumbnail_url}
+                                        openModal={toggleModal}
+                                        currentPage={currentPage}
+                                    />
+                                })
                     }
                     <Modal
                         modal={modal}

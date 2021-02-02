@@ -66,7 +66,7 @@ const SmallText = styled.span`
 
 function ModalComponent(props) {
     var item = props.item || {}
-    
+  
     return (
         <>
             {item !== {} &&
@@ -96,8 +96,7 @@ function ModalComponent(props) {
                         </DivModalBody>
                     </StyledModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={props.toggleModal}>Ok</Button>{' '}
-                        <Button color="secondary" onClick={props.toggleModal}>Cancel</Button>
+                        <Button color="primary" onClick={props.toggleModal}>Ok</Button>
                     </ModalFooter>
                 </StyledModal>
             }
