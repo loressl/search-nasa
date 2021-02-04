@@ -31,7 +31,7 @@ function Search(props) {
     const [heightHeader, setHeightHeader] = useState(0)
     const [modal, setModal] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [itensPerPage, setItensPerPage] = useState(10)
+    var itensPerPage = 10
 
     var list = props.list || []
 
