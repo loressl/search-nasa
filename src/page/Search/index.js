@@ -99,6 +99,7 @@ function Search(props) {
                 </Header>
                 {list.length !== 0 &&
                     <Pagination
+                        marginTop={heightHeader}
                         itensPerPage={itensPerPage}
                         totalItens={list.length}
                         paginate={paginate}
@@ -106,7 +107,7 @@ function Search(props) {
                         setCurrentPage={setCurrentPage}
                     />
                 }
-                <Container id="container">
+                <Container id="container" paddingTop={heightHeader + (list.length === 0 ? 10 : 90)}>
                     {list === "error" ?
                         <Alert
                             color="info"

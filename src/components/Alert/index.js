@@ -4,7 +4,7 @@ import { Alert } from 'reactstrap'
 export default function AlertComponent(props){
     return(
         <>
-            <Alert color={props.color}>
+            <Alert color={props.color} style={{width: '100%'}}>
                 <h4 className="alert-heading">{props.title}</h4>
                 <p>{props.message}</p>
                 <hr />

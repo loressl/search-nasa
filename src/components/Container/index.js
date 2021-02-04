@@ -5,7 +5,15 @@ const Container = styled.div`
     justify-content:space-evenly;
     align-items:center;
     flex-wrap:wrap;
-    margin:1rem;
+    //margin:1rem;
+    padding-top: ${({ paddingTop }) => `${paddingTop}px`};
+    flex-grow:1;
+    position:sticky;
+    padding-left:10px;
+    padding-right:10px;
+    @media screen and (max-width: 500px){
+        padding-top: ${({ paddingTop }) => `calc(${paddingTop}px/2)`};
+    }
 `
 
 export default Container

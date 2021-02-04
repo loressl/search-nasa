@@ -10,7 +10,18 @@ const StyledPagination = styled(Pagination)`
     width:100%;
     display:flex;
     justify-content:center;
-    margin-top:0.5rem;
+    position:fixed;
+    z-index:1;
+    background-color:white;
+    margin-top: ${({ marginTop }) => `${marginTop}px`};
+    @media screen and (max-width: 500px){
+        justify-content:flex-start;
+        margin-top: ${({ marginTop }) => `calc(${marginTop}px/2.3)`};
+    }
+    .pagination{
+        overflow-x:auto;
+        padding-top:0.5rem;
+    }
 `
 
 const StyledPaginationLink = styled(PaginationLink)`
@@ -20,9 +31,8 @@ const StyledPaginationLink = styled(PaginationLink)`
     }
 `
 
-export default function Paginationcomponent({ itensPerPage, totalItens, paginate, currentPage, setCurrentPage }) {
+export default function Paginationcomponent({ itensPerPage, totalItens, paginate, currentPage, setCurrentPage, ...props }) {
     const pageNumbers = []
-
     for (let i = 1; i <= Math.ceil(totalItens / itensPerPage); i++) {
         pageNumbers.push(i)
     }
@@ -33,7 +43,7 @@ export default function Paginationcomponent({ itensPerPage, totalItens, paginate
     }
 
     return (
-        <StyledPagination aria-label="Page navigation example">
+        <StyledPagination marginTop={props.marginTop} aria-label="Page navigation example">
             <PaginationItem
                 disabled={currentPage <= 1}>
                 <StyledPaginationLink

@@ -6,17 +6,19 @@ const Header = styled.div`
     align-items:center;
     justify-content:center;
     width:100%;
-    height: 20rem;
+    min-height: 18rem;
     flex:1;
     background-size:cover;
     background-position:center;
-    background-image: url(${({backgroundImage}) => backgroundImage});
+    background-image: url(${({ backgroundImage }) => backgroundImage});
     z-index:1;
+    position:fixed;
+    top:0;
     @media screen and (max-width: 500px){
-        height:10rem
-    }
-    *{
-        margin:0;
+        min-height:8rem;
+        *{
+            margin:0;
+        }
     }
 `
 
