@@ -12,7 +12,7 @@ const Container = styled.div`
     padding-left:10px;
     padding-right:10px;
     @media screen and (max-width: 500px){
-        padding-top: ${({ paddingTop }) => `calc(${paddingTop}px/2)`};
+        padding-top: ${({ paddingTop }) => `${paddingTop}px`};
     }
 `
 

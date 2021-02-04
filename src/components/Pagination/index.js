@@ -16,7 +16,7 @@ const StyledPagination = styled(Pagination)`
     margin-top: ${({ marginTop }) => `${marginTop}px`};
     @media screen and (max-width: 500px){
         justify-content:flex-start;
-        margin-top: ${({ marginTop }) => `calc(${marginTop}px/2.3)`};
+        margin-top: ${({ marginTop }) => `${marginTop}px`};
     }
     .pagination{
         overflow-x:auto;

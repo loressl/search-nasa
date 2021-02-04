@@ -15,10 +15,10 @@ const Header = styled.div`
     position:fixed;
     top:0;
     @media screen and (max-width: 500px){
-        min-height:8rem;
-        *{
+        min-height:10rem;
+        /* *{
             margin:0;
-        }
+        } */
     }
 `
 
@@ -32,6 +32,7 @@ Header.Content = styled.div`
     margin:2rem;
     @media screen and (max-width: 500px){
         width:70%;
+        margin:0.5rem;
     }
 `
 

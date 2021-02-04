@@ -22,6 +22,8 @@ import { connect } from 'react-redux'
 import { searchAction, clearList } from '../../store/actions/search'
 import { AtomSpinner } from 'react-epic-spinners'
 
+import {useResizeDetector} from 'react-resize-detector'
+
 
 function Search(props) {
     const [fieldSearch, setFieldSearch] = useState('')
@@ -32,6 +34,7 @@ function Search(props) {
     const [modal, setModal] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     var itensPerPage = 10
+    var { height, ref} = useResizeDetector()
 
     var list = props.list || []
 
@@ -40,8 +43,11 @@ function Search(props) {
             setOnSubmit(false)
         }
         setHeightFooter(document.getElementById('footer').clientHeight)
-        setHeightHeader(document.getElementById('header').clientHeight)
     }, [list.length])
+
+    useEffect(()=>{
+        setHeightHeader(height)
+    },[height])
 
     const onSubmit = async () => {
         props.onClearList()
@@ -64,7 +70,7 @@ function Search(props) {
     return (
         <>
             <div style={{ minHeight: `calc(100vh - ${heightFooter}px)` }}>
-                <Header id="header" backgroundImage={backHeader}>
+                <Header ref={ref} id="header" backgroundImage={backHeader}>
                     <Title>
                         The most beautiful astronomical photographs in the world
                     </Title>
@@ -97,7 +103,7 @@ function Search(props) {
                         </InputGroup>
                     </Header.Content>
                 </Header>
-                {list.length !== 0 &&
+                {(list.length !== 0 && list !== "error") &&
                     <Pagination
                         marginTop={heightHeader}
                         itensPerPage={itensPerPage}
@@ -107,7 +113,7 @@ function Search(props) {
                         setCurrentPage={setCurrentPage}
                     />
                 }
-                <Container id="container" paddingTop={heightHeader + (list.length === 0 ? 10 : 90)}>
+                <Container id="container" paddingTop={(list.length === 0 && !onSubmitFlag) || list ==="error" ? (heightHeader + 15) : (heightHeader +70)}>
                     {list === "error" ?
                         <Alert
                             color="info"
@@ -123,7 +129,7 @@ function Search(props) {
                                 messageFooter="Do your research!!"
                             />
                             : onSubmitFlag && list.length === 0 ?
-                                <AtomSpinner style={{ marginTop: '10rem' }} size={100} color="black" />
+                                <AtomSpinner size={100} color="black" />
                                 : currentItens.map((item, index) => {
                                     return <Card
                                         key={index}
