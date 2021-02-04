@@ -5,29 +5,18 @@ import {
     PaginationLink
 } from 'reactstrap'
 import styled from 'styled-components'
-import './styles.css';
 
 const StyledPagination = styled(Pagination)`
     width:100%;
     display:flex;
-    justify-content:end;
+    justify-content:center;
+    margin-top:0.5rem;
 `
 
 const StyledPaginationLink = styled(PaginationLink)`
     color:black;
-    &:active{
-        background-color: #000;
-        color:white;
-    }
-    ::marker{
-        background-color: #000;
-    }
     &:hover{
-        background-color: #000;
-        color:white;
-    }
-    &:link{
-        background-color: #000;
+        color:black;
     }
 `
 
@@ -46,9 +35,8 @@ export default function Paginationcomponent({ itensPerPage, totalItens, paginate
     return (
         <StyledPagination aria-label="Page navigation example">
             <PaginationItem
-                className="paginationItemStyle"
                 disabled={currentPage <= 1}>
-                <PaginationLink
+                <StyledPaginationLink
                     onClick={e => handleCLick(e, currentPage - 1)}
                     previous
                     href="#"

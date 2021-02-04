@@ -59,7 +59,7 @@ function Search(props) {
     const indexOfFirstItem = indexOfLastItem - itensPerPage
     const currentItens = list.slice(indexOfFirstItem, indexOfLastItem)
 
-    const paginate =(pageNumber)=> setCurrentPage(pageNumber)
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     return (
         <>
@@ -90,20 +90,22 @@ function Search(props) {
                                 For a better experience, type in English only
                             </Tooltip>
                             <InputGroupAddon addonType="append">
-                                <Button onClick={onSubmit} style={style.button} color="info">
+                                <Button onClick={onSubmit} style={style.button} color="primary">
                                     Search
                                 </Button>
                             </InputGroupAddon>
                         </InputGroup>
                     </Header.Content>
                 </Header>
-                    <Pagination 
-                        itensPerPage={itensPerPage} 
+                {list.length !== 0 &&
+                    <Pagination
+                        itensPerPage={itensPerPage}
                         totalItens={list.length}
                         paginate={paginate}
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
                     />
+                }
                 <Container id="container">
                     {list === "error" ?
                         <Alert

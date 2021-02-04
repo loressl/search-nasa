@@ -57,7 +57,7 @@ function CardComponent({ setIndexItem, ...props }) {
                     </CardText>
                 </CardBody>
                 <CardFooter>
-                    <Button color="info" onClick={_ => {
+                    <Button color="primary" onClick={_ => {
                         var page = props.currentPage - 1
                         var index = props.index
                         props.openModal()
