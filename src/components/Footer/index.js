@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{memo} from 'react'
 import styled from 'styled-components'
 import iconGitHub from '../../assets/img/github.png'
 import iconLinkedin from '../../assets/img/linkedin.png'
@@ -19,23 +19,24 @@ const ImgIcon = styled.img`
     height:30px;
     margin-left:0.5rem;
 `
+const addressGitHub= "https://github.com/loressl"
+const addressLinkedin= "https://www.linkedin.com/in/lorena-lima-78a9b752/"
 
-function Footer(props) {
+function Footer(props) { 
     return (
         <FooterBase
             id={props.id}
             color={props.color}
             textColor={props.textColor}
         >
-            <a href="https://github.com/loressl">
-                <ImgIcon src={iconGitHub} alt="https://github.com/loressl" />
+            <a href={addressGitHub}>
+                <ImgIcon src={iconGitHub} alt={addressGitHub} />
             </a>
-            <a href="https://www.linkedin.com/in/lorena-lima-78a9b752/">
-                <ImgIcon src={iconLinkedin} alt="https://www.linkedin.com/in/lorena-lima-78a9b752/" />
+            <a href={addressLinkedin}>
+                <ImgIcon src={iconLinkedin} alt={addressLinkedin} />
             </a>
         </FooterBase>
     )
 }
 
-
-export default Footer
+export default memo(Footer)

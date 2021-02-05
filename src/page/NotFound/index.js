@@ -19,6 +19,7 @@ const StyledNotFound = styled.div`
 
 const StyledButton = styled(Button)`
     color:#fff;
+    margin-bottom:0.5rem;
 `
 
 export default function NotFound() {

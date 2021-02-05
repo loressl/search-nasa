@@ -110,4 +110,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(ModalComponent)
+export default connect(mapStateToProps, null)(React.memo(ModalComponent))

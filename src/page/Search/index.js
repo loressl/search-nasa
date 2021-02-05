@@ -1,13 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Header from '../../components/Header'
 import Title from '../../components/Title'
-import {
-    InputGroup,
-    InputGroupAddon,
-    Input,
-    Button,
-    Tooltip
-} from 'reactstrap'
 import style from '../../config/styles'
 import backHeader from '../../assets/img/header2.jpg'
 import Container from '../../components/Container'
@@ -22,8 +15,9 @@ import { connect } from 'react-redux'
 import { searchAction, clearList } from '../../store/actions/search'
 import { AtomSpinner } from 'react-epic-spinners'
 
-import {useResizeDetector} from 'react-resize-detector'
+import { useResizeDetector } from 'react-resize-detector'
 
+import InputSearch from '../../components/InputSearch'
 
 function Search(props) {
     const [fieldSearch, setFieldSearch] = useState('')
@@ -34,9 +28,13 @@ function Search(props) {
     const [modal, setModal] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     var itensPerPage = 10
-    var { height, ref} = useResizeDetector()
+    var { height, ref } = useResizeDetector()
 
     var list = props.list || []
+
+    const indexOfLastItem = currentPage * itensPerPage
+    const indexOfFirstItem = indexOfLastItem - itensPerPage
+    const currentItens = list.slice(indexOfFirstItem, indexOfLastItem)
 
     useEffect(() => {
         if (list.length > 0) {
@@ -45,9 +43,10 @@ function Search(props) {
         setHeightFooter(document.getElementById('footer').clientHeight)
     }, [list.length])
 
-    useEffect(()=>{
+    useEffect(() => {
         setHeightHeader(height)
-    },[height])
+
+    }, [height])
 
     const onSubmit = async () => {
         props.onClearList()
@@ -55,17 +54,22 @@ function Search(props) {
         await props.onSearch(fieldSearch)
     }
 
-    const toggle = () => setTooltipOpen(!tooltipOpen);
+    const toggle = useCallback(() => {
+        setTooltipOpen(!tooltipOpen)
+    }, [setTooltipOpen, tooltipOpen]);
 
-    const toggleModal = () => {
+    const toggleModal = useCallback(() => {
         setModal(!modal)
-    }
+    }, [setModal, modal])
 
-    const indexOfLastItem = currentPage * itensPerPage
-    const indexOfFirstItem = indexOfLastItem - itensPerPage
-    const currentItens = list.slice(indexOfFirstItem, indexOfLastItem)
+    const paginate = useCallback((pageNumber) => {
+        setCurrentPage(pageNumber)
+    }, [setCurrentPage])
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+    const handleCLickPage = useCallback((e, index) => {
+        e.preventDefault()
+        setCurrentPage(index)
+    }, [setCurrentPage])
 
     return (
         <>
@@ -75,32 +79,14 @@ function Search(props) {
                         The most beautiful astronomical photographs in the world
                     </Title>
                     <Header.Content>
-                        <InputGroup>
-                            <Input
-                                id="fieldSearch"
-                                placeholder="Type here..."
-                                value={fieldSearch}
-                                onChange={event => setFieldSearch(event.target.value)}
-                                onKeyPress={event => {
-                                    if (event.key === "Enter") {
-                                        onSubmit()
-                                    }
-                                }}
-                            />
-                            <Tooltip
-                                placement="top-start"
-                                isOpen={tooltipOpen}
-                                target="fieldSearch"
-                                toggle={toggle}
-                            >
-                                For a better experience, type in English only
-                            </Tooltip>
-                            <InputGroupAddon addonType="append">
-                                <Button onClick={onSubmit} style={style.button} color="primary">
-                                    Search
-                                </Button>
-                            </InputGroupAddon>
-                        </InputGroup>
+                        <InputSearch
+                            setFieldSearch={setFieldSearch}
+                            fieldSearch={fieldSearch}
+                            onSubmit={onSubmit}
+                            tooltipOpen={tooltipOpen}
+                            toggle={toggle}
+                            button={style.button}
+                        />
                     </Header.Content>
                 </Header>
                 {(list.length !== 0 && list !== "error") &&
@@ -110,10 +96,10 @@ function Search(props) {
                         totalItens={list.length}
                         paginate={paginate}
                         currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
+                        handleCLick={handleCLickPage}
                     />
                 }
-                <Container id="container" paddingTop={(list.length === 0 && !onSubmitFlag) || list ==="error" ? (heightHeader + 15) : (heightHeader +70)}>
+                <Container id="container" paddingTop={(list.length === 0 && !onSubmitFlag) || list === "error" ? (heightHeader + 15) : (heightHeader + 70)}>
                     {list === "error" ?
                         <Alert
                             color="info"

@@ -31,15 +31,10 @@ const StyledPaginationLink = styled(PaginationLink)`
     }
 `
 
-export default function Paginationcomponent({ itensPerPage, totalItens, paginate, currentPage, setCurrentPage, ...props }) {
+function Paginationcomponent({ itensPerPage, totalItens, paginate, currentPage, handleCLick, ...props }) {
     const pageNumbers = []
     for (let i = 1; i <= Math.ceil(totalItens / itensPerPage); i++) {
         pageNumbers.push(i)
-    }
-
-    const handleCLick = (e, index) => {
-        e.preventDefault()
-        setCurrentPage(index)
     }
 
     return (
@@ -71,3 +66,5 @@ export default function Paginationcomponent({ itensPerPage, totalItens, paginate
         </StyledPagination>
     )
 }
+
+export default React.memo(Paginationcomponent)

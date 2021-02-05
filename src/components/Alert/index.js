@@ -1,7 +1,8 @@
 import React from 'react'
 import { Alert } from 'reactstrap'
 
-export default function AlertComponent(props){
+function AlertComponent(props){
+    console.log("render alert...")
     return(
         <>
             <Alert color={props.color} style={{width: '100%'}}>
@@ -13,3 +14,5 @@ export default function AlertComponent(props){
         </>
     )
 }
+
+export default React.memo(AlertComponent)
