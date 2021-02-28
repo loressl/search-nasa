@@ -15,8 +15,7 @@ export async function search (fieldSearch) {
             }
         })
     }
-    const response = await axiosInstance.get(`/search/?search_query=${searchQuery}`).catch(err=>{
-        console.log(err)
+    const response = await axiosInstance.get(`/search/?search_query=${searchQuery}`).catch(()=>{
         return "error"
     })
     return response
