@@ -5,3 +5,6 @@
 * Telas
 
 <img src="screen/search_nasa.gif" width="750px" height="550px">
+
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
