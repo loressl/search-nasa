@@ -30,7 +30,7 @@ function Search(props) {
     var itensPerPage = 10
     var { height, ref } = useResizeDetector()
 
-    var list = props.list || []
+    var list = props.list
 
     const indexOfLastItem = currentPage * itensPerPage
     const indexOfFirstItem = indexOfLastItem - itensPerPage
